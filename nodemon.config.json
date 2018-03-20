@@ -1,0 +1,10 @@
+{
+	"restartable": "rs",
+	"ignore": [
+		"node_modules"
+	],
+	"watch": [
+		"index.js",
+		"server/**/*.js"
+	]
+}
