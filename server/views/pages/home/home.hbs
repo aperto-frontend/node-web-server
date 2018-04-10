@@ -1,13 +1,17 @@
 {{#extend "lyt_default"}}
 	{{#content "main"}}
 
+		{{! Test handlebars-helpers }}
+		{{#is headline "Home Page"}}
+			<h3>Is helpers is working</h3>
+		{{/is}}
+
+		{{! Test mangony-hbs-helpers }}
 		{{#times 4}}
-			<p>This is my home page content!</p>
+			<p>Times helpers is working</p>
 		{{/times}}
 
-		{{#is headline "Home Page"}}
-			<h2>headline is working</h2>
-		{{/is}}
+		<p>{{body}}</p>
 
 		{{> image }}
 	{{/content}}
