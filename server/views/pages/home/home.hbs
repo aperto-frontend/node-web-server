@@ -1,0 +1,14 @@
+{{#extend "lyt_default"}}
+	{{#content "main"}}
+
+		{{#times 4}}
+			<p>This is my home page content!</p>
+		{{/times}}
+
+		{{#is headline "Home Page"}}
+			<h2>headline is working</h2>
+		{{/is}}
+
+		{{> image }}
+	{{/content}}
+{{/extend}}

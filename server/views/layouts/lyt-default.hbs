@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+
+
+<div class="container">
+	<h1>{{headline}}</h1>
+
+	{{#block "header"}}
+		<div class="r-header">
+			<div class="header__top">
+				{{> navigation }}
+			</div>
+		</div>
+	{{/block}}
+
+	{{#block "main"}}
+		This is my layout content
+	{{/block}}
+
+</div>
+
+</body>
+</html>

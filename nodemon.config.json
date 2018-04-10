@@ -5,6 +5,7 @@
 	],
 	"watch": [
 		"index.js",
-		"server/**/*.js"
-	]
+		"server/"
+	],
+	"ext": "js,hbs"
 }

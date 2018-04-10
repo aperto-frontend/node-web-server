@@ -2,6 +2,10 @@
  * Libs
  */
 const express = require('express');
+const fs = require('fs');
+const hbs = require('hbs');
+const layouts = require('handlebars-layouts');
+const mangonyHelpers = require('mangony-hbs-helpers');
 
 // Utilities
 const moduleDebugger = require('./server/utils/debugger');
@@ -26,6 +30,27 @@ app.set('port', 3000);
 app.use(express.static(`${__dirname}/statics`)); // __dirname is a NodeJS var which you can access directly. It contains the path to this file.
 
 /**
+ * Configure view engine
+ */
+const handlebars = hbs.handlebars;
+
+
+// Partials
+hbs.registerPartials(`${__dirname}/server/views/layouts`);
+hbs.registerPartials(`${__dirname}/server/views/partials`);
+
+// Helpers
+require('handlebars-helpers')({
+	handlebars: handlebars
+});
+layouts.register(handlebars);
+mangonyHelpers.register(handlebars);
+
+// Set view engine
+app.set('view engine', 'hbs');
+app.set('views', `${__dirname}/server/views/pages`);
+
+/**
  * Custom modules
  *
  * With custom modules we split up our application into multiple mini apps.
@@ -33,18 +58,21 @@ app.use(express.static(`${__dirname}/statics`)); // __dirname is a NodeJS var wh
  * These modules get assigned to an entry point (like `/users`) and
  * handle the request on its own.
  */
-app.use('/users', moduleDebugger('modules:users'), usersModule);
-
+app.use('/api/users', moduleDebugger('modules:users'), usersModule);
 
 /**
  * Default route
  */
 app.get('/', (req, res) => {
-	res
-		.status(200) // In general that is not necessary, when you send something back, but at least you see how to chain `status()` with `send()`
-		.json({
-			test: 'test'
-		});
+	res.redirect('/home');
+});
+
+app.get('/:id', (req, res) => {
+	const {id} = req.params;
+	const data = fs.readFileSync(`${__dirname}/server/views/pages/${id}/${id}.json`, 'utf-8');
+	res.locals = JSON.parse(data);
+
+	res.render(`${id}/${id}`);
 });
 
 console.info(`Express server started on port ${app.get('port')}!`);
